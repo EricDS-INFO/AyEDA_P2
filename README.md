@@ -16,5 +16,7 @@
 - *TDD* y *BDD* para el desarrollo con tests con la ibrería [Catch2](https://github.com/catchorg/Catch2)
 - *CI/CD* con [Travis](https://docs.travis-ci.com/)
 
+***
+
 ## Ejecutar tests -> make test
 ## Compilar main -> make
