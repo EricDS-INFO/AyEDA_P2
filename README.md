@@ -1,5 +1,5 @@
 # ESTE REPOSITORIO CONTIENE LA SEGUNDA PRÁCTICA DE AyEDA.
-    ( - Conaway's Game of life - )
+*( - Conaway's Game of life - )*
 ***
 
 ## Contenido:
