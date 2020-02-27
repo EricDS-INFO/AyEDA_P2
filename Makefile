@@ -77,6 +77,10 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	@echo "Compiling: $< -> $@"
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 
+
+graphic: 
+	g++ src/game_of_life.cpp -o runner -lglut -lGLU -lGL
+
 test:
 	@echo "Making tests: $(TEST_NAME)"
 	$(CXX) -o $(TEST_NAME) $(TEST_SOURCES) 

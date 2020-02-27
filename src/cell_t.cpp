@@ -12,3 +12,12 @@
 /*
     This file contains all the methods development from the cell class.
 */
+class cell_t
+{
+private:
+    /* data */
+public:
+    cell_t(/* args */);
+    ~cell_t();
+};
+

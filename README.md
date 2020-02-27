@@ -18,5 +18,10 @@
 
 ***
 
+## dependencias
+
+- [Catch2](https://github.com/catchorg/Catch2)
+- [OpenGL](https://www.opengl.org/)
+
 ## Ejecutar tests -> make test
 ## Compilar main -> make

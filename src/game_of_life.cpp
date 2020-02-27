@@ -18,96 +18,35 @@
 
 
 #include <iostream>
+#include <GL/glut.h>
 
-#include "../include/dll_t.hpp"
-#include "../include/vector_t.hpp"
 
-struct Book
+#include "../include/cell_t.hpp"
+#include "../include/board_t.hpp"
+
+void display_me(void)
 {
-    std::string isbn;
-    std::string title;
-
-    std::ostream& write(std::ostream& os)
-    {
-        os << "| " << title << " | " << isbn << " |";
-        return os;
-    
-    }
-
-    friend std::ostream& operator<< (std::ostream& os, Book& my_book)
-    {
-        my_book.write(os);
-        return os;
-    }
-
-};
-
-
-
-struct Subject
-{
-    std::string st_code;
-    std::string name;
-
-    DLL_T<Book> bibl;
- 
-};
-
-
-
-void ver_biblio(Vector_T<Subject>& itinerary, std::string code);
-
-
-int main(void ) {
-
-    Vector_T<Subject> itinerary;
-    itinerary.resize(2);
-
-    
-
-    Book book1;
-    Book book2;
-
-    
-    book1.isbn = "?????";
-    book1.title = "first book";
-
-    book2.isbn = "?????";
-    book2.title = "second book";
-    
-    std::cout << book1 << std::endl;
-
-    itinerary[0].st_code = "00a0";
-    itinerary[0].name = "Advanced Maths";
-    itinerary[0].bibl.push_back(new DLL_Node_T<Book> (book1));
-    itinerary[0].bibl.push_back(new DLL_Node_T<Book> (book2));
-
-    itinerary[1].st_code = "10b2";
-    itinerary[1].name = "History of computers";
-    itinerary[1].bibl.push_back(new DLL_Node_T<Book> (book1));
-    itinerary[1].bibl.push_back(new DLL_Node_T<Book> (book2));
-    
-
-    ver_biblio(itinerary, "00a0");
-
-
-            
-    
-
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POLYGON);
+        glVertex3f(0.5, 0.0, 0.5);
+        glVertex3f(0.5, 0.0, 0.0);
+        glVertex3f(0.0, 0.5, 0.0);
+        glVertex3f(0.0, 0.0, 0.5);
+        glVertex3f(0.0, 0.0, 0.5);
+    glEnd();
+    glFlush();
 }
 
-
-
-void ver_biblio(Vector_T<Subject>& itinerary, std::string st_code)
+int main(int argc, char **argv)
 {
-    for (int i = 0; i < itinerary.size(); i++) {
-        if (itinerary[i].st_code == st_code) {
-            std::string name = itinerary[i].name; 
-            std::cout << "Bibliografía de la asignatura " << name <<": " << std::endl;
-            
-            std::cout << "\n\n";
-            std::cout << itinerary[i].bibl;
-            std::cout << std::endl;
-        }
-    }
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE);
+    glutInitWindowSize(400, 300);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Hello World");
+    glutDisplayFunc(display_me);
+    glutMainLoop();
+
+    return 0;
 }
+
