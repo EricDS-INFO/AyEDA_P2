@@ -8,15 +8,15 @@
 
 
 
-      int   m_x,m_y;                // mouse x y
-      bool  m_down = false;
+int   m_x,m_y;                 // mouse x y moovement
+bool  m_down = false;          // mouse click default state
 
-      unsigned int speed = 100; 
-      int   play = false;            //
-      int   size_ = 10;              //
+unsigned int speed = 100;      // speed variable
+int   play = false;            // Default state of play
+int   size_ = 10;              // Size of the cells 
 
-const int   X=240;            // 
-const int   Y=120;            // 
+const int   X=240;            // Whole number of cells in x axis
+const int   Y=120;            // Whole number of cells in y axis
 
 
 int w =  X*size_;              // Width of the window (cell size and number by X axis cells)
@@ -33,31 +33,49 @@ struct P
 
 
 
-// This function displays the actual state of the matrix
+// This function displays each of the alive cells
 void display()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    // first we clear the buffer 
+    glClear(GL_COLOR_BUFFER_BIT); 
+
+    // then the object color is setted (to white in this case (RGB))
     glColor3ub(255,255,255);
+
+    // We give the point a size that represents the cell
     glPointSize(size_);
+
+    // Then GLUT is prepared to paint points
     glBegin(GL_POINTS);
+
+                /// DEFAULT CELL PAINTING ///
+
+    // We ride all the matrix in order to search the alive cells and draw them in the window
     for (int y = 0; y < Y; ++y)
         for (int x = 0; x < X; ++x)
-            if (p[x][y].life) glVertex2f(size_/2 + x*size_, size_/2 + y*size_);
+            if (p[x][y].life) 
+                // The next function paints the alive cell in the position of the window as it is in the matrix of cells 
+                //            x dimension , y dimension
+                glVertex2f(size_/2 + x*size_, size_/2 + y*size_); 
 
+                /// MOUSE CELL PAINTING ///
 
+    // This conditional check the mouse movement for the user giving life to cells
     if (m_down && m_x > 0 && m_y > 0 &&  m_x < X * size_ && m_y < Y*size_)
+        
+        p[m_x/size_][m_y/size_].life == 0 ? p[m_x/size_][m_y/size_].life = 1 : p[m_x/size_][m_y/size_].life = 0 ; 
 
-        p[m_x/size_][m_y/size_].life = 1;
-
-        else
-                    {
-                        int x = m_x/size_;  int y = m_y/size_;
-                        glVertex2f(size_/2 + size_ * x ,size_/2 + size_ * y);
-                    }
-
+    // if the mouse isn't  clicking the last position of the mouse is drawed as white but not setted the cell as alive
+    else {
+        int x = m_x/size_;  int y = m_y/size_;
+        glVertex2f(size_/2 + size_ * x ,size_/2 + size_ * y);
+    }
+    // finally we end the "drawing time"
     glEnd();
 
-    glutSwapBuffers(); //glFlush();
+    //We must flush the buffer so, these two functions can achieve that
+    //glutSwapBuffers(); 
+    glFlush();
 
 }
 
