@@ -33,7 +33,7 @@ struct P
 
 
 
-
+// This function displays the actual state of the matrix
 void display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -86,10 +86,10 @@ int right (int xx)
 // this function captures the up cell values
 int up (int yy)
 {
-    if (yy == 0 ) 
+    if (yy == 0 ) //if actual position is 0 in y axis in matrix, we get the greater number
         yy = Y-1; 
     else 
-        yy--;
+        yy--;     // we decrease one position in y axis.
  return yy;
 }
 
@@ -109,34 +109,34 @@ void update()
       // We watch the entire matrix of cells (each cell) for checking the status
       for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
       {
-            int counter    = 0;
+            int neighbors    = 0;
 
             // Counter increases if a cell was found in each position
 
             // this group represents the basic axis of neighbor cells
-            if (p[left(x)][y].life)     counter++;  //  left   
-            if (p[right(x)][y].life)    counter++;  //  right
-            if (p[x][up(y)].life)       counter++;  //  up
-            if (p[x][down(y)].life)     counter++;  //  down
+            if (p[left(x)][y].life)     neighbors++;  //  left   
+            if (p[right(x)][y].life)    neighbors++;  //  right
+            if (p[x][up(y)].life)       neighbors++;  //  up
+            if (p[x][down(y)].life)     neighbors++;  //  down
 
 
             // this group represents the diagonal of neighbor cells
-            if (p[left(x)][up(y)].life)    counter++;  // left  +  up
-            if (p[right(x)][up(y)].life)   counter++;  // right + up
-            if (p[left(x)][down(y)].life)  counter++;  // left + down
-            if (p[right(x)][down(y)].life) counter++;  // right + down
+            if (p[left(x)][up(y)].life)    neighbors++;  // left  +  up
+            if (p[right(x)][up(y)].life)   neighbors++;  // right + up
+            if (p[left(x)][down(y)].life)  neighbors++;  // left + down
+            if (p[right(x)][down(y)].life) neighbors++;  // right + down
 
             // if cell is alive
             if ( p[x][y].life) 
-              if (counter != 2 && counter != 3) p[x][y].next = false; // Only if the neighbor numbers is 2 or 3 the cell stills alive
+              if (neighbors != 2 && neighbors != 3) p[x][y].next = false; // Only if the neighbor numbers is 2 or 3 the cell stills alive
               else p[x][y].next = true;
 
             // if cell is dead
             if (!p[x][y].life) 
-              if (counter == 3) p[x][y].next = true; // if there are 3 neighbors alive a cell is born
+              if (neighbors == 3) p[x][y].next = true; // if there are 3 neighbors alive a cell is born
               else p[x][y].next = false;
       }
-        
+        // The next loop just updates the life stage as the next was setted up
         for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
             p[x][y].life  = p[x][y].next;
 
