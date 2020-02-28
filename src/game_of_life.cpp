@@ -11,15 +11,16 @@
       int   m_x,m_y;                // mouse x y
       bool  m_down = false;
 
-      int   play = true;            //
-      int   size_ = 5;              //
+      unsigned int speed = 100; 
+      int   play = false;            //
+      int   size_ = 10;              //
 
 const int   X=240;            // 
 const int   Y=120;            // 
 
 
-int w =  X*size_;              //
-int h =  Y*size_;              //
+int w =  X*size_;              // Width of the window (cell size and number by X axis cells)
+int h =  Y*size_;              // Heigt of the window (cell size and number by Y axis cells)
 
 
 // this struct defines the cell, which is 
@@ -27,7 +28,7 @@ struct P
 {
     bool life;
     int next;
-} p [X][Y];
+} p [X][Y]; // | <- The matrix is created in the instance of the Struct with X and Y values that provides the dimensions 
 
 
 
@@ -102,57 +103,89 @@ int down (int yy)
  return yy;
 }
 
-// this fucntion updates each cell values in the matrix
-
+// this fucntion updates each cell values in the matrix in order to capture the state of the rules
 void update()
 {
-
+      // We watch the entire matrix of cells (each cell) for checking the status
       for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
       {
-                  int counter    = 0;
+            int counter    = 0;
 
-                  if (p[left(x)]    [y].life)    counter++;         //left
-                  if (p[right(x)]   [y].life)    counter++;         //right
-                  if (p[x]          [up(y)].life) counter++;        //up
-                  if (p[x]          [down(y)].life) counter++;      //down
+            // Counter increases if a cell was found in each position
 
-                  if (p[left(x)]    [up(y)].life) counter++;        //left  +  up
-                  if (p[right(x)]   [up(y)].life) counter++;         //right + down
+            // this group represents the basic axis of neighbor cells
+            if (p[left(x)][y].life)     counter++;  //  left   
+            if (p[right(x)][y].life)    counter++;  //  right
+            if (p[x][up(y)].life)       counter++;  //  up
+            if (p[x][down(y)].life)     counter++;  //  down
 
-                  if (p[left(x)]    [down(y)].life) counter++;      //left + up
-                  if (p[right(x)]   [down(y)].life) counter++;      //right
 
-                  if ( p[x][y].life) if (counter != 2 && counter != 3) p[x][y].next = false; else p[x][y].next = true;
-                  if (!p[x][y].life) if (counter == 3) p[x][y].next = true; else p[x][y].next = false;
+            // this group represents the diagonal of neighbor cells
+            if (p[left(x)][up(y)].life)    counter++;  // left  +  up
+            if (p[right(x)][up(y)].life)   counter++;  // right + up
+            if (p[left(x)][down(y)].life)  counter++;  // left + down
+            if (p[right(x)][down(y)].life) counter++;  // right + down
+
+            // if cell is alive
+            if ( p[x][y].life) 
+              if (counter != 2 && counter != 3) p[x][y].next = false; // Only if the neighbor numbers is 2 or 3 the cell stills alive
+              else p[x][y].next = true;
+
+            // if cell is dead
+            if (!p[x][y].life) 
+              if (counter == 3) p[x][y].next = true; // if there are 3 neighbors alive a cell is born
+              else p[x][y].next = false;
       }
+        
         for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
-        p[x][y].life  = p[x][y].next;
+            p[x][y].life  = p[x][y].next;
 
 
 }
 
 
 // Reads the imput from user in order to stop, start or clear the game
-void tasten( unsigned char key, int xmouse, int ymouse)
+void selector( unsigned char key, int xmouse, int ymouse)
 {
     switch (key)
     {
+    // PLAY STATUS
     case '1':
         play = 1;
         break;
-    
+
+    // PAUSE STATUS
     case '2':
         play = 0;
         break;
 
-    case '3':   for (int y = 0; y < Y; ++y) { 
-                    for (int x = 0; x < X; ++x) {
-                    p[x][y].next =0; 
-                    p[x][y].life  = 0;
-                    }
-                }
+    // CLEAR STAGE 
+    case '3':   
+        // this check all the matrix killing all the cells
+        for (int y = 0; y < Y; ++y) { 
+            for (int x = 0; x < X; ++x) {
+            p[x][y].next = 0; 
+            p[x][y].life  = 0;
+            }
+        }
         break;
-    //
+
+    case '0':
+        std::exit(0);
+        break;
+
+    // INCREASE SPEED
+    case 'u':
+        if (speed > 0)
+        speed = speed - 50;
+        break;
+
+    // DECREASE SPEED
+    case 'd':
+        if (speed <= 1000);
+        speed = speed + 50;
+        break;
+    break;
     default:
         break;
     }
@@ -160,12 +193,19 @@ void tasten( unsigned char key, int xmouse, int ymouse)
 // Timer function responsibility is to manage the time flux in the program
 void timer(int = 0)
 {
-    glutKeyboardFunc(tasten);
+    // This reads the keyboard input in running time
+    glutKeyboardFunc(selector); 
     
-    if (play) update ();
+    // Only if the play variable is 1 the program proceed to update (you can change it by keyboard, selector function contains it)
+    if (play) 
+        update (); 
 
+    // this shows the actual state in the window
     display();
-    glutTimerFunc(10, timer, 0);
+
+    // Registers a timer callback executed in a specified milliseconds number (this provides changes throug running time)
+    //            msecs,  callback, value
+    glutTimerFunc(speed , timer,     0);
 }
 
 // this function tracks the mouse position and interaction
@@ -234,7 +274,7 @@ int main(int argc, char **argv)
       glutInitWindowPosition(-10, -10);
 
       /* Whe summon a window with the next method by giving it the name of the window as parameter */
-      glutCreateWindow("Brownian motion");
+      glutCreateWindow("Cell matrix |  press 1 to start and 2 for stop. 3 clears the stage and 0 closes the window");
 
       /* This statement gives the window a color by terms of RGBA ([0-1][0-1][0-1][0-1] )*/
       glClearColor(0, 0, 0, 1.0);
@@ -265,6 +305,7 @@ int main(int argc, char **argv)
       /* Same as previous but without dragging*/
       glutPassiveMotionFunc(motionpass);
 
+      /* this statement should be called at least once in a GLUT program. Provides a never return statement, looping the callbacks */
       glutMainLoop();
 
       
