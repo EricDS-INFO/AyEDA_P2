@@ -13,6 +13,7 @@
     This file contains all the methods development from the cell class.
 */
 
+
 #include "../include/cell_t.hpp"
 
 bool cell_t::get_state(void) 

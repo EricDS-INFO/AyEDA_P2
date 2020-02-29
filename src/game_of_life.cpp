@@ -80,44 +80,44 @@ void display()
 
 
 // this function captures the left cell values
-int left (int xx)
+int left (int pos)
 {
-    if (xx == 0 ) 
-        xx = X - 1; 
+    if (pos == 0 ) 
+        pos = X - 1; 
     else 
-        xx--;
- return xx;
+        pos--;
+ return pos;
 }
 
 
 // this function captures the right cell values
-int right (int xx)
+int right (int pos)
 {
-    if (xx == X - 1 ) 
-        xx = 0; 
+    if (pos == X - 1 ) 
+        pos = 0; 
     else 
-        xx++;
- return xx;
+        pos++;
+ return pos;
 }
 
 // this function captures the up cell values
-int up (int yy)
+int up (int pos)
 {
-    if (yy == 0 ) //if actual position is 0 in y axis in matrix, we get the greater number
-        yy = Y-1; 
+    if (pos == 0 ) //if actual position is 0 in y axis in matrix, we get the greater number
+        pos = Y-1; 
     else 
-        yy--;     // we decrease one position in y axis.
- return yy;
+        pos--;     // we decrease one position in y axis.
+ return pos;
 }
 
 // this function captures the down cell values
-int down (int yy)
+int down (int pos)
 {
-    if (yy == Y - 1 ) 
-        yy = 0; 
+    if (pos == Y - 1 ) 
+        pos = 0; 
     else 
-        yy++;
- return yy;
+        pos++;
+ return pos;
 }
 
 // this fucntion updates each cell values in the matrix in order to capture the state of the rules
@@ -126,7 +126,7 @@ void update()
       // We watch the entire matrix of cells (each cell) for checking the status
       for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
       {
-            int neighbors    = 0;
+            int neighbors = 0;
 
             // Counter increases if a cell was found in each position
 
