@@ -120,7 +120,7 @@ int down (int pos)
  return pos;
 }
 
-// this fucntion updates each cell values in the matrix in order to capture the state of the rules
+// this function updates each cell values in the matrix in order to capture the state of the rules
 void update()
 {
       // We watch the entire matrix of cells (each cell) for checking the status
