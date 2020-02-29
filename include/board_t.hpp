@@ -13,11 +13,24 @@
     This file contains the Board class definition.
 */
 
+#include <iostream>
+#include <vector>
+
+#include "cell_t.hpp"
+
 class board_t
 {
 private:
-    /* data */
+    int n_dim_;
+    int m_dim_;
+    cell_t** cell_grid_;
 public:
-    board_t(/* args */);
-    ~board_t();
+      board_t(int n, int m);
+     // ~board_t();
+      
+      cell_t& get_at(int i, int j);
+      void set_at(int i, int j, bool state);
+
+      std::ostream& write(std::ostream& os);
+
 };
