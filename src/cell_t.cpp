@@ -12,12 +12,25 @@
 /*
     This file contains all the methods development from the cell class.
 */
-class cell_t
-{
-private:
-    /* data */
-public:
-    cell_t(/* args */);
-    ~cell_t();
-};
 
+#include "../include/cell_t.hpp"
+
+bool cell_t::get_state(void) 
+{
+    return alive_;
+}
+int cell_t::get_next(void) 
+{
+    return next_;
+}
+
+
+void cell_t::set_state(bool state) 
+{
+    alive_ = state;
+}
+
+void cell_t::set_next(int next) 
+{
+    next_ = next;
+}

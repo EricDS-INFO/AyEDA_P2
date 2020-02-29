@@ -13,12 +13,3 @@
     This file contains all the methods development from the board class.
 */
 
-class board_t
-{
-private:
-    /* data */
-public:
-    board_t(/* args */);
-    ~board_t();
-};
-

@@ -6,6 +6,7 @@
 #include <termios.h>
 #include <SDL/SDL.h>
 
+#include "cell_t.cpp"
 
 
 int   m_x,m_y;                 // mouse x y moovement
@@ -31,7 +32,7 @@ struct P
 } p [X][Y]; // | <- The matrix is created in the instance of the Struct with X and Y values that provides the dimensions 
 
 
-
+cell_t Cells [X][Y];
 
 // This function displays each of the alive cells
 void display()
@@ -53,7 +54,7 @@ void display()
     // We ride all the matrix in order to search the alive cells and draw them in the window
     for (int y = 0; y < Y; ++y)
         for (int x = 0; x < X; ++x)
-            if (p[x][y].life) 
+            if (Cells[x][y].get_state()) 
                 // The next function paints the alive cell in the position of the window as it is in the matrix of cells 
                 //            x dimension , y dimension
                 glVertex2f(size_/2 + x*size_, size_/2 + y*size_); 
@@ -61,10 +62,8 @@ void display()
                 /// MOUSE CELL PAINTING ///
 
     // This conditional check the mouse movement for the user giving life to cells
-    if (m_down && m_x > 0 && m_y > 0 &&  m_x < X * size_ && m_y < Y*size_)
-        
-        p[m_x/size_][m_y/size_].life == 0 ? p[m_x/size_][m_y/size_].life = 1 : p[m_x/size_][m_y/size_].life = 0 ; 
-
+    if (m_down && m_x > 0 && m_y > 0 &&  m_x < X * size_ && m_y < Y*size_) 
+        Cells[m_x/size_][m_y/size_].set_state(true); 
     // if the mouse isn't  clicking the last position of the mouse is drawed as white but not setted the cell as alive
     else {
         int x = m_x/size_;  int y = m_y/size_;
@@ -132,31 +131,31 @@ void update()
             // Counter increases if a cell was found in each position
 
             // this group represents the basic axis of neighbor cells
-            if (p[left(x)][y].life)     neighbors++;  //  left   
-            if (p[right(x)][y].life)    neighbors++;  //  right
-            if (p[x][up(y)].life)       neighbors++;  //  up
-            if (p[x][down(y)].life)     neighbors++;  //  down
-
+            
+            if (Cells[left(x)][y].get_state())          neighbors++;  //  left   
+            if (Cells[right(x)][y].get_state())         neighbors++;  //  right
+            if (Cells[x][up(y)].get_state())            neighbors++;  //  up
+            if (Cells[x][down(y)].get_state())          neighbors++;  //  down
 
             // this group represents the diagonal of neighbor cells
-            if (p[left(x)][up(y)].life)    neighbors++;  // left  +  up
-            if (p[right(x)][up(y)].life)   neighbors++;  // right + up
-            if (p[left(x)][down(y)].life)  neighbors++;  // left + down
-            if (p[right(x)][down(y)].life) neighbors++;  // right + down
+            if (Cells[left(x)][up(y)].get_state())      neighbors++;  // left  +  up
+            if (Cells[right(x)][up(y)].get_state())     neighbors++;  // right + up
+            if (Cells[left(x)][down(y)].get_state())    neighbors++;  // left + down
+            if (Cells[right(x)][down(y)].get_state())   neighbors++;  // right + down
 
             // if cell is alive
-            if ( p[x][y].life) 
-              if (neighbors != 2 && neighbors != 3) p[x][y].next = false; // Only if the neighbor numbers is 2 or 3 the cell stills alive
-              else p[x][y].next = true;
+            if ( Cells[x][y].get_state()) 
+              if (neighbors != 2 && neighbors != 3) Cells[x][y].set_next(false); // Only if the neighbor numbers is 2 or 3 the cell stills alive
+              else Cells[x][y].set_next(true);
 
             // if cell is dead
-            if (!p[x][y].life) 
-              if (neighbors == 3) p[x][y].next = true; // if there are 3 neighbors alive a cell is born
-              else p[x][y].next = false;
+            if (!Cells[x][y].get_state()) 
+              if (neighbors == 3) Cells[x][y].set_next(true); // if there are 3 neighbors alive a cell is born
+              else Cells[x][y].set_next(false);
       }
         // The next loop just updates the life stage as the next was setted up
         for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
-            p[x][y].life  = p[x][y].next;
+            Cells[x][y].set_state( Cells[x][y].get_next() );
 
 
 }
@@ -182,8 +181,8 @@ void selector( unsigned char key, int xmouse, int ymouse)
         // this check all the matrix killing all the cells
         for (int y = 0; y < Y; ++y) { 
             for (int x = 0; x < X; ++x) {
-            p[x][y].next = 0; 
-            p[x][y].life  = 0;
+                Cells[x][y].set_next(false);
+                Cells[x][y].set_state(false); 
             }
         }
         break;
@@ -229,24 +228,24 @@ void timer(int = 0)
 // this function tracks the mouse position and interaction
 void mouse (int button, int state, int ax, int ay)
 {
-    m_y=ay; //| -> position
-    m_x=ax; //|
+    m_y = ay; //| -> position
+    m_x = ax; //|
     m_down = state == GLUT_DOWN; // | -> reads if button was clicked
 }
 
 // captures the mouse motion in the scene
 void motion (int ax, int ay)
 {
-    m_x=ax;
-    m_y=ay;
+    m_x = ax;
+    m_y = ay;
 }
 
 
 // captures the passive mouse motion in the scene
 void motionpass (int ax, int ay)
 {
-   m_x=ax;
-   m_y=ay;
+   m_x = ax;
+   m_y = ay;
 }
 
 
@@ -260,12 +259,10 @@ int main(int argc, char **argv)
 {
     /* the next nested loops create the initial state of the layout */
     for (int x = 0; x < X; x++)
-        for (int y = 0; y < Y; y++)
-       {
-
-            p[x][y].life  = 0; //rand()% 2;
-            p[x][y].next  = 0;
-      }
+        for (int y = 0; y < Y; y++) {
+            Cells[x][y].set_state(false);  //rand()% 2;
+            Cells[x][y].set_next(false);
+        }
 
       /*This statement prepare the library to run*/
       glutInit(&argc, argv);

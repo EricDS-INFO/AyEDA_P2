@@ -18,8 +18,15 @@
 class cell_t
 {
 private:
-    /* data */
+    bool alive_;
+    int next_;
 public:
-    cell_t(/* args */);
-    ~cell_t();
+   // cell_t(/* args */);
+   // ~cell_t();
+
+    bool get_state();
+    int get_next();
+
+    void set_state(bool state);
+    void set_next(int next);
 };
