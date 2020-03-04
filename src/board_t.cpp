@@ -22,6 +22,7 @@ board_t::board_t(int n = 300, int m = 300)
 
     /*dynamic matrix of cells is created*/
     cell_grid_ = new cell_t *[n_dim_];
+    
     for (int i = 0; i < n_dim_; i++) {
         cell_grid_[i] = new cell_t[m_dim_];
         

@@ -3,4 +3,49 @@ en el borde de la malla debe contar las 8 vecinas
  -> creamos unas columnas y filas adicionaes de células muertas 
  -> el marco no se actualiza.
 
-Estado: M || M
+Estado: V || M
+        1    0
+
+
+en la comprobación:
+
+    nº_vecinas + = célula[i][j].getEstado();
+
+contarVecinas(const Tablero&); // --> dependencia cíclica (lo sabía >:D)
+
+ -> se arregla "incluyendo el prototipo": declaración anticipada.
+ -> le decimos lo que es,  le decimos que tablero es una clase.
+ -> no poner include en los dos (se recomienda incluir la célula en el tablero)
+   
+ Bucles para cada turno:
+
+   1º contar vecinas.
+   2º actualizar Estado.
+   3º imprimir células. 
+
+set estado devuelve un entero si necesitasemos devolver el 
+estado anterior a la par que cambiar el estado.
+
+se puede implementar cell_at que permite modificar y obtener la célula (como un at)
+
+<---N+2--->
+=========== A  
+#<---N---x# |
+#        |# |
+#        M# M+2
+#        |# |
+#        v# |
+=========== v
+
+celula*** Malla;
+
+Malla = new(celula**)[M+2];
+for(hasta N+2){
+    Malla[i] = new(celula*)[N+2]
+}
+
+for(hasta M+2){
+    for(hasta N+2){
+        Malla[i] = new celula;
+    }
+}
