@@ -16,7 +16,7 @@
 
 #include "../include/cell_t.hpp"
 
-bool cell_t::get_state(void) 
+bool cell_t::get_state(void) const 
 {
     return alive_;
 }
@@ -26,7 +26,7 @@ int cell_t::get_next(void)
 }
 
 
-void cell_t::set_state(bool state) 
+int cell_t::set_state(int state) 
 {
     alive_ = state;
 }

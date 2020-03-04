@@ -29,10 +29,10 @@ public:
     next_(false){};
     ~cell_t(void){};
 
-    bool get_state(void);
+    bool get_state(void) const;
     int get_next(void);
 
-    void set_state(bool state);
+    int set_state(int state);
     void set_next(int next);
 
     int get_i_pos(void);
