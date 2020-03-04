@@ -22,6 +22,7 @@ private:
     bool alive_;
     bool next_;
     int i_, j_;
+    int alive_neighbours_;
 
 public:
     cell_t(void):
@@ -29,7 +30,7 @@ public:
     next_(false){};
     ~cell_t(void){};
 
-    bool get_state(void) const;
+    int get_state(void) const;
     int get_next(void);
 
     int set_state(int state);

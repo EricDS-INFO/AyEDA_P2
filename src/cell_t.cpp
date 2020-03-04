@@ -16,7 +16,7 @@
 
 #include "../include/cell_t.hpp"
 
-bool cell_t::get_state(void) const 
+int cell_t::get_state(void) const 
 {
     return alive_;
 }

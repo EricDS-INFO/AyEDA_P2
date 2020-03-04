@@ -2,3 +2,5 @@ en la malla, las celulas requieren de un puntero.
 en el borde de la malla debe contar las 8 vecinas
  -> creamos unas columnas y filas adicionaes de células muertas 
  -> el marco no se actualiza.
+
+Estado: M || M
