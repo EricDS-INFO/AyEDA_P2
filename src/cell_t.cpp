@@ -86,8 +86,26 @@ int cell_t::count_neighbours(board_t& board)
         for (int j = 0; i < board.get_m(); j++)
         {
             // Check the basic axis
-            /*left*/
-            if (board.at(i - 1, j).get_state())
+            /* LEFT */
+            if (board.at(i - 1, j).get_state())         neighbours++;
+            /* RIGHT */
+            if (board.at(i + 1, j).get_state())         neighbours++;
+            /* UP */
+            if (board.at(i, j - 1).get_state())         neighbours++;
+            /* DOWN */
+            if (board.at(i, j + 1).get_state())         neighbours++;
+
+            //check the diagonal axis:
+
+            /*1st square*/
+            if (board.at(i - 1, j - 1).get_state())     neighbours++;
+            /*2nd square*/
+            if (board.at(i + 1, j - 1).get_state())     neighbours++;
+            /*3rd square*/
+            if (board.at(i - 1, j + 1).get_state())     neighbours++;
+            /*4th square*/
+            if (board.at(i + 1, j + 1).get_state())     neighbours++;
+           
 
 
         }
