@@ -15,6 +15,10 @@
 
 
 #include "../include/cell_t.hpp"
+#include "../include/board_t.hpp"
+
+#include <iostream>
+
 
 int cell_t::get_state(void) const 
 {
@@ -74,40 +78,22 @@ std::ostream& operator<<(std::ostream& os, cell_t& cell)
 }
 
 
-// Private methods
 
-int cell_t::right(int pos)
+int cell_t::count_neighbours(board_t& board)
 {
-    if (pos == X - 1 ) 
-        pos = 0; 
-    else 
-        pos++;
-    return pos;
-}    
+    int neighbours = 0;
+    for (int i = 0; i < board.get_n(); i++)
+        for (int j = 0; i < board.get_m(); j++)
+        {
+            // Check the basic axis
+            /*left*/
+            if (board.at(i - 1, j).get_state())
 
-int cell_t::left(int pos)
-{
-    if (pos == 0 ) 
-        pos = X - 1; 
-    else 
-        pos--;
-    return pos;
+
+        }
+
+
+    return neighbours;
 }
 
-int cell_t::up(int pos)
-{
-    if (pos == 0 ) 
-        pos = Y - 1; 
-    else 
-        pos--;   
-    return pos;
-}
 
-int cell_t::down(int pos)
-{
-    if (pos ==  Y - 1 ) 
-        pos = 0; 
-    else 
-        pos++;   
-    return pos;
-} 

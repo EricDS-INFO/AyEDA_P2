@@ -13,11 +13,13 @@
     This file contains the Board class definition.
 */
 
+#ifndef BOARD_H
+#define BOARD_H
+
 #include <iostream>
-#include <vector>
 
-#include "cell_t.hpp"
 
+class cell_t;
 class board_t
 {
 private:
@@ -28,9 +30,14 @@ public:
       board_t(int n, int m);
      // ~board_t();
       
+      inline  int get_n() { return n_dim_; }
+
+      inline  int get_m() { return m_dim_; }
+
       cell_t& at(const int i, const int j) const;
       cell_t& at(const int i, const int j);
 
       std::ostream& write(std::ostream& os);
 
 };
+#endif

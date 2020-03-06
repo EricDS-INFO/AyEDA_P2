@@ -12,18 +12,23 @@
 /*
     This file contains the Cell class definition.
 */
-#pragma once
+#ifndef CELL_H
+#define CELL_H
+
+
 #include <iostream>
-
 class board_t;
-
 class cell_t
 {
     private:
         bool alive_;
         bool next_;
+        
         int i_, j_;
+
         int alive_neighbours_;
+
+        int n_, m_;
 
     public:
         cell_t(void):
@@ -44,15 +49,15 @@ class cell_t
         void set_j_pos(int j);
 
         // int updateState(void);
-        int neighbours(const board_t& board);
+        int count_neighbours(board_t& board);
 
         std::ostream& write( std::ostream& os);
         friend std::ostream& operator<< (std::ostream& os, cell_t& cell);
 
     private:
-
-        int right(int pos);    
-        int left(int pos);
-        int up(int pos);
-        int down(int pos); 
+        //int left (int pos);
+        //int righ (int pos);
+        //int up (int pos);
+        //int down (int pos);
 };
+#endif

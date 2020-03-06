@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 
-#include "cell_t.cpp"
-#include "board_t.cpp"
+
+#include "../include/cell_t.hpp"
+#include "../include/board_t.hpp"
+
 
 int main(void) {
     int n_, m_;

@@ -14,6 +14,10 @@
 */
 
 #include "../include/board_t.hpp"
+#include "../include/cell_t.hpp"
+
+#include <iostream>
+
 
 board_t::board_t(int n = 300, int m = 300)
 {
@@ -21,16 +25,16 @@ board_t::board_t(int n = 300, int m = 300)
     m_dim_ = m;
 
     /*dynamic matrix of cells is created*/
-    cell_grid_ = new cell_t *[n_dim_];
+    cell_grid_ = new cell_t *[n_dim_ + 1];
     
     for (int i = 0; i < n_dim_; i++) {
-        cell_grid_[i] = new cell_t[m_dim_];
+        cell_grid_[i] = new cell_t[m_dim_ + 1];
         
     }
 
     /*this sets the default state of the cells as dead*/
-    for (int i = 0; i < n_dim_; i++)  
-        for (int j = 0; j < m_dim_; j++ )
+    for (int i = 0; i < n_dim_ + 1; i++)  
+        for (int j = 0; j < m_dim_ + 1; j++ )
         {
             cell_grid_[i][j].set_state(false);
             cell_grid_[i][j].set_next(false);
