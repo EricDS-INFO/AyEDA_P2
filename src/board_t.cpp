@@ -40,14 +40,14 @@ board_t::board_t(int n = 300, int m = 300)
 }
 
 
-cell_t& board_t::get_at(int i, int j)
+cell_t& board_t::at(const int i, const int j) const
 {
-    return cell_grid_[i][j];
+   return cell_grid_[i][j];
 }
 
-void board_t::set_at(int i, int j, bool state)
+cell_t& board_t::at(const int i, const int j)
 {
-    cell_grid_[i][j].set_state(state);
+   return cell_grid_[i][j];
 }
 
 std::ostream& board_t::write(std::ostream& os)

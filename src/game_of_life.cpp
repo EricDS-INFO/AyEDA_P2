@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
-#include <SDL/SDL.h>
+//#include <SDL/SDL.h>
 
 #include "cell_t.cpp"
 

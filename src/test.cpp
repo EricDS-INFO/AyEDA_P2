@@ -15,8 +15,8 @@ int main(void) {
 
     board_t cells(n_, m_);
 
-    cells.set_at(0,1, true);
+    cells.at(0,1).set_state(1);
     cells.write(std::cout);
 
-return 0;
+    return 0;
 }

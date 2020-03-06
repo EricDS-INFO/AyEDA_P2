@@ -28,8 +28,8 @@ public:
       board_t(int n, int m);
      // ~board_t();
       
-      cell_t& get_at(int i, int j);
-      void set_at(int i, int j, bool state);
+      cell_t& at(const int i, const int j) const;
+      cell_t& at(const int i, const int j);
 
       std::ostream& write(std::ostream& os);
 

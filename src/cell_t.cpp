@@ -72,3 +72,42 @@ std::ostream& operator<<(std::ostream& os, cell_t& cell)
 
     return os;
 }
+
+
+// Private methods
+
+int cell_t::right(int pos)
+{
+    if (pos == X - 1 ) 
+        pos = 0; 
+    else 
+        pos++;
+    return pos;
+}    
+
+int cell_t::left(int pos)
+{
+    if (pos == 0 ) 
+        pos = X - 1; 
+    else 
+        pos--;
+    return pos;
+}
+
+int cell_t::up(int pos)
+{
+    if (pos == 0 ) 
+        pos = Y - 1; 
+    else 
+        pos--;   
+    return pos;
+}
+
+int cell_t::down(int pos)
+{
+    if (pos ==  Y - 1 ) 
+        pos = 0; 
+    else 
+        pos++;   
+    return pos;
+} 
