@@ -33,6 +33,7 @@ int cell_t::get_next(void)
 int cell_t::set_state(int state) 
 {
     alive_ = state;
+    return alive_;
 }
 
 void cell_t::set_next(int next) 
@@ -81,19 +82,23 @@ std::ostream& operator<<(std::ostream& os, cell_t& cell)
 int cell_t::updateState(void)
 {
     if ( alive_ == 1 )
+    {
         if (alive_neighbours_ != 2 &&
             alive_neighbours_ != 3 )
             alive_ = 0;
         else
             alive_ = 1;
-
+    }
     
     if ( alive_ == 0 )
+    {
         if (alive_neighbours_ == 3)
             alive_ = 1;
         else
             alive_ = 0;
-        
+    }
+
+    return alive_;   
 }
 
 

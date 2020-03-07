@@ -6,6 +6,10 @@
 #include "../include/board_t.hpp"
 
 void write_pattern(int n, int m);
+
+void create_osc(int n, int m, board_t& cells);
+void create_ship(int n, int m, board_t& cells);
+
 void select_1by1(int n, int m, board_t& cells);
 
 
@@ -25,11 +29,40 @@ int main(void) {
 
     board_t cells(n, m);
 
+    int opt = 5;
+        std::cout << "SELECCIONE UNA OPCIÓN DE INICIO: " << std::endl;
+        std::cout << "Seleccionar oscilador de 3 células     --> introducir 1 \n";
+        std::cout << "Seleccionar planeador pequeño          --> introducir 2 \n";
+        std::cout << "Seleccionar manualmente las posiciones --> introducir 3 \n";
+        std::cout << "--------------------------------------------------------\n";
+        std::cout << "salir                                  --> introducir 0 \n\n";
+        std::cout << "Introduzca una opción: ";
+        std::cin >> opt;
 
+        switch (opt)
+        {
+            case 1:
 
-    std::cout << "SELECCIONE LAS POSICIONES DEL TABLERO DONDE HAY UNA CÉLULA VIVA: \n";
+                create_osc(n,m, cells);
+                break;
 
-    select_1by1(n, m, cells);
+            case 2:
+                break;
+
+            case 3:
+
+                std::cout << "SELECCIONE LAS POSICIONES DEL TABLERO DONDE HAY UNA CÉLULA VIVA: \n";
+                select_1by1(n, m, cells);
+                break;
+
+            case 0:
+                break;
+
+            default:
+                break;
+        }
+    
+
 
     std::cout << "Turno 0: \n";
     cells.write(std::cout);
@@ -95,6 +128,26 @@ void write_pattern(int n, int m)
 
 }
 
+
+
+void create_osc(int n, int m, board_t& cells)
+{
+
+    if(((n + m) % 2) == 1)
+    {
+        cells.at(n/2 + 2, m/2 ).set_state(1);
+        cells.at(n/2 + 2, m/2 + 1).set_state(1);
+        cells.at(n/2 + 2, m/2 + 2).set_state(1);
+    } 
+    if (((n + m) % 2) == 0)
+    {
+        cells.at(n/2  , m/2  ).set_state(1);
+        cells.at(n/2  , m/2 + 1).set_state(1);
+        cells.at(n/2  , m/2 + 2 ).set_state(1);
+    }
+}
+void create_ship(int n, int m, board_t& cells);
+
 void select_1by1(int n, int m, board_t& cells)
 {
 
@@ -115,3 +168,4 @@ void select_1by1(int n, int m, board_t& cells)
         }
     }
 } 
+
