@@ -79,37 +79,29 @@ std::ostream& operator<<(std::ostream& os, cell_t& cell)
 
 
 
-int cell_t::count_neighbours(board_t& board)
+int cell_t::count_neighbours(const board_t& board)
 {
     int neighbours = 0;
-    for (int i = 0; i < board.get_n(); i++)
-        for (int j = 0; i < board.get_m(); j++)
-        {
-            // Check the basic axis
-            /* LEFT */
-            if (board.at(i - 1, j).get_state())         neighbours++;
-            /* RIGHT */
-            if (board.at(i + 1, j).get_state())         neighbours++;
-            /* UP */
-            if (board.at(i, j - 1).get_state())         neighbours++;
-            /* DOWN */
-            if (board.at(i, j + 1).get_state())         neighbours++;
-
-            //check the diagonal axis:
-
-            /*1st square*/
-            if (board.at(i - 1, j - 1).get_state())     neighbours++;
-            /*2nd square*/
-            if (board.at(i + 1, j - 1).get_state())     neighbours++;
-            /*3rd square*/
-            if (board.at(i - 1, j + 1).get_state())     neighbours++;
-            /*4th square*/
-            if (board.at(i + 1, j + 1).get_state())     neighbours++;
-           
-
-
-        }
-
+    // Check the basic axis
+    /* LEFT */
+    if (board.at(i_ - 1, j_).get_state() == 1)         neighbours++;
+    /* RIGHT */
+    if (board.at(i_ + 1, j_).get_state() == 1)         neighbours++;
+    /* UP */
+    if (board.at(i_, j_ - 1).get_state() == 1)         neighbours++;
+    /* DOWN */
+    if (board.at(i_, j_ + 1).get_state() == 1)         neighbours++;
+    
+    //check the diagonal axis:
+    /*1st square*/
+    if (board.at(i_ - 1, j_ - 1).get_state() == 1)     neighbours++;
+    /*2nd square*/
+    if (board.at(i_ + 1, j_ - 1).get_state() == 1)     neighbours++;
+    /*3rd square*/
+    if (board.at(i_ - 1, j_ + 1).get_state() == 1)     neighbours++;
+    /*4th square*/
+    if (board.at(i_ + 1, j_ + 1).get_state() == 1)     neighbours++;
+            
 
     return neighbours;
 }

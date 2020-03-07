@@ -17,8 +17,15 @@ int main(void) {
 
     board_t cells(n_, m_);
 
-    cells.at(0,1).set_state(1);
+    cells.at(0,0).set_state(1);
     cells.write(std::cout);
 
+    //std::cout 
+    //<< cells.at(1,1).count_neighbours(cells)
+    //<< "\n";
+    //std::cout 
+    //<< cells.at(1,2).count_neighbours(cells)
+    //<< "\n";
+        
     return 0;
 }

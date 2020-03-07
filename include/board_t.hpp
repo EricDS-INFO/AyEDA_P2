@@ -30,9 +30,9 @@ public:
       board_t(int n, int m);
      // ~board_t();
       
-      inline  int get_n() { return n_dim_; }
+      inline  int get_n() const { return n_dim_ - 1; }
 
-      inline  int get_m() { return m_dim_; }
+      inline  int get_m() const { return m_dim_ - 1; }
 
       cell_t& at(const int i, const int j) const;
       cell_t& at(const int i, const int j);

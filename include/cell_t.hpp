@@ -49,7 +49,7 @@ class cell_t
         void set_j_pos(int j);
 
         // int updateState(void);
-        int count_neighbours(board_t& board);
+        int count_neighbours(const board_t& board);
 
         std::ostream& write( std::ostream& os);
         friend std::ostream& operator<< (std::ostream& os, cell_t& cell);

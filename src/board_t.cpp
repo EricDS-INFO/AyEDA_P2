@@ -21,8 +21,8 @@
 
 board_t::board_t(int n = 300, int m = 300)
 {
-    n_dim_ = n;
-    m_dim_ = m;
+    n_dim_ = n + 1;
+    m_dim_ = m + 1;
 
     /*dynamic matrix of cells is created*/
     cell_grid_ = new cell_t *[n_dim_ + 1];
@@ -33,8 +33,8 @@ board_t::board_t(int n = 300, int m = 300)
     }
 
     /*this sets the default state of the cells as dead*/
-    for (int i = 0; i < n_dim_ + 1; i++)  
-        for (int j = 0; j < m_dim_ + 1; j++ )
+    for (int i = 0; i < n_dim_ ; i++)  
+        for (int j = 0; j < m_dim_; j++ )
         {
             cell_grid_[i][j].set_state(false);
             cell_grid_[i][j].set_next(false);
@@ -44,7 +44,7 @@ board_t::board_t(int n = 300, int m = 300)
 }
 
 
-cell_t& board_t::at(const int i, const int j) const
+cell_t& board_t::at(const int i, const int j ) const
 {
    return cell_grid_[i][j];
 }
@@ -57,20 +57,20 @@ cell_t& board_t::at(const int i, const int j)
 std::ostream& board_t::write(std::ostream& os)
 {
     os << "\n╔";
-    for (int i = 0; i < m_dim_*3; i++)
+    for (int i = 1; i <= (m_dim_ - 1) * 3; i++)
         os << "═";
     os << "╗\n";
-    for (int i = 0; i < n_dim_; i++)  
+    for (int i = 1; i <= n_dim_ - 1; i++)  
     {
         os << "║";
-        for (int j = 0; j < m_dim_; j++ )
+        for (int j = 1; j <= m_dim_ - 1; j++ )
         {
-            os << " " << cell_grid_[i][j] << " ";       
+            os << "-" << cell_grid_[i][j] << "-";       
         }
         os << "║\n";
     }
     os << "╚";
-    for (int i = 0; i < m_dim_*3; i++)
+    for (int i = 1; i <= (m_dim_ - 1)*3; i++)
         os << "═";
     os << "╝\n";
 
