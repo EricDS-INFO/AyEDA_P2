@@ -78,6 +78,24 @@ std::ostream& operator<<(std::ostream& os, cell_t& cell)
 }
 
 
+int cell_t::updateState(void)
+{
+    if ( alive_ == 1 )
+        if (alive_neighbours_ != 2 &&
+            alive_neighbours_ != 3 )
+            alive_ = 0;
+        else
+            alive_ = 1;
+
+    
+    if ( alive_ == 0 )
+        if (alive_neighbours_ == 3)
+            alive_ = 1;
+        else
+            alive_ = 0;
+        
+}
+
 
 int cell_t::count_neighbours(const board_t& board)
 {
@@ -102,6 +120,7 @@ int cell_t::count_neighbours(const board_t& board)
     /*4th square*/
     if (board.at(i_ + 1, j_ + 1).get_state() == 1)     neighbours++;
             
+    alive_neighbours_ = neighbours;
 
     return neighbours;
 }

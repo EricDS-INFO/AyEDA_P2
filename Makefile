@@ -79,7 +79,7 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 
 
 graphic: 
-	g++ src/game_of_life.cpp -o runner -lglut -lGLU -lGL
+	g++ GRAPHIC/game_of_life.cpp -o runner -lglut -lGLU -lGL
 
 test:
 	@echo "Making tests: $(TEST_NAME)"

@@ -21,8 +21,8 @@
 
 board_t::board_t(int n = 300, int m = 300)
 {
-    n_dim_ = n + 1;
-    m_dim_ = m + 1;
+    n_dim_ = n + 2;
+    m_dim_ = m + 2;
 
     /*dynamic matrix of cells is created*/
     cell_grid_ = new cell_t *[n_dim_ + 1];
@@ -57,21 +57,21 @@ cell_t& board_t::at(const int i, const int j)
 std::ostream& board_t::write(std::ostream& os)
 {
     os << "\n╔";
-    for (int i = 1; i <= (m_dim_ - 1) * 3; i++)
-        os << "═";
+    for (int i = 1; i < (m_dim_ - 1); i++)
+        os << "═══";
     os << "╗\n";
-    for (int i = 1; i <= n_dim_ - 1; i++)  
+    for (int i = 1; i < n_dim_ - 1; i++)  
     {
         os << "║";
-        for (int j = 1; j <= m_dim_ - 1; j++ )
+        for (int j = 1; j < m_dim_ - 1; j++ )
         {
-            os << "-" << cell_grid_[i][j] << "-";       
+            os << " " << cell_grid_[i][j] << " ";       
         }
         os << "║\n";
     }
     os << "╚";
-    for (int i = 1; i <= (m_dim_ - 1)*3; i++)
-        os << "═";
+    for (int i = 1; i < (m_dim_ - 1 ); i++)
+        os << "═══";
     os << "╝\n";
 
     return os;

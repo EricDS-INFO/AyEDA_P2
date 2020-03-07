@@ -6,7 +6,7 @@
 #include <termios.h>
 //#include <SDL/SDL.h>
 
-#include "cell_t.cpp"
+#include "../src/cell_t.cpp"
 
 
 int   m_x,m_y;                 // mouse x y moovement

@@ -48,7 +48,7 @@ class cell_t
         int get_j_pos(void);
         void set_j_pos(int j);
 
-        // int updateState(void);
+        int updateState(void);
         int count_neighbours(const board_t& board);
 
         std::ostream& write( std::ostream& os);
