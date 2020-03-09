@@ -57,7 +57,7 @@ int main(void) {
                 break;
 
             case 0:
-                
+                cells.~board_t();
                 return 0;
                 break;
 
@@ -98,6 +98,7 @@ int main(void) {
     
 
 
+    cells.~board_t();
     return 0;
 }
 
