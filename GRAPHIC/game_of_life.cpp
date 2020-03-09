@@ -7,6 +7,8 @@
 //#include <SDL/SDL.h>
 
 #include "../src/cell_t.cpp"
+#include "../src/board_t.cpp"
+
 
 
 int   m_x,m_y;                 // mouse x y moovement

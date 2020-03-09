@@ -135,9 +135,9 @@ void create_osc(int n, int m, board_t& cells)
 
     if(((n + m) % 2) == 1)
     {
-        cells.at(n/2 + 2, m/2 ).set_state(1);
-        cells.at(n/2 + 2, m/2 + 1).set_state(1);
-        cells.at(n/2 + 2, m/2 + 2).set_state(1);
+        cells.at(n/2 + 20, m/2 ).set_state(1);
+        cells.at(n/2 + 20, m/2 + 1).set_state(1);
+        cells.at(n/2 + 20, m/2 + 2).set_state(1);
     } 
     if (((n + m) % 2) == 0)
     {
