@@ -47,6 +47,7 @@ int main(void) {
                 break;
 
             case 2:
+
                 break;
 
             case 3:
@@ -56,6 +57,8 @@ int main(void) {
                 break;
 
             case 0:
+                
+                return 0;
                 break;
 
             default:
@@ -141,9 +144,9 @@ void create_osc(int n, int m, board_t& cells)
     } 
     if (((n + m) % 2) == 0)
     {
-        cells.at(n/2  , m/2  ).set_state(1);
-        cells.at(n/2  , m/2 + 1).set_state(1);
-        cells.at(n/2  , m/2 + 2 ).set_state(1);
+        cells.at(n/2 + 1 , m/2  ).set_state(1);
+        cells.at(n/2 + 1 , m/2 + 1).set_state(1);
+        cells.at(n/2 + 1 , m/2 + 2 ).set_state(1);
     }
 }
 void create_ship(int n, int m, board_t& cells);

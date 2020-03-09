@@ -25,7 +25,7 @@ board_t::board_t(int n = 300, int m = 300)
     m_dim_ = m + 2;
 
     /*dynamic matrix of cells is created*/
-    cell_grid_ = new cell_t *[n_dim_ + 1];
+    cell_grid_ = new cell_t *[n_dim_];
     
     for (int i = 0; i < n_dim_; i++) {
         cell_grid_[i] = new cell_t[m_dim_ + 1];
@@ -43,6 +43,12 @@ board_t::board_t(int n = 300, int m = 300)
         }
 }
 
+board_t::~board_t()
+{
+    for (int i = 0; i < n_dim_; i++)
+        delete cell_grid_[i];
+
+}
 
 cell_t& board_t::at(const int i, const int j ) const
 {
