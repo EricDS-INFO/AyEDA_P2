@@ -58,13 +58,14 @@ int main(void) {
 
             case 0:
                 cells.~board_t();
-                return 0;
                 break;
 
             default:
                 break;
         }
     
+    if( cells.get_n() + 2 == 0 )
+        return 0;
 
 
     std::cout << "Turno 0: \n";

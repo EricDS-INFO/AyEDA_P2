@@ -44,9 +44,18 @@ board_t::board_t(int n = 300, int m = 300)
 }
 
 board_t::~board_t()
-{     for (int i = 0; i < n_dim_ ; i++)
+{    
+    for (int i = 0; i < n_dim_ ; i++) 
+    {
         delete[] cell_grid_[i];
+    }
+
+    n_dim_ = 0;
+    m_dim_ = 0;
+    
+        
     delete[] cell_grid_;
+
 }
 
 cell_t& board_t::at(const int i, const int j ) const
