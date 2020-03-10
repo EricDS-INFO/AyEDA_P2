@@ -58,15 +58,15 @@ void display()
 
     // This conditional check the mouse movement for the user giving life to cells
     if (m_down && m_x > 0 && m_y > 0 &&  
-        m_x < cells.get_m() * cells.size() && 
-        m_y < cells.get_n() * cells.size() )
+        m_x < cells.get_n() * cells.size() && 
+        m_y < cells.get_m() * cells.size() )
 
        cells.at( m_x/cells.size(), m_y/cells.size()).set_state(true);
         
     // if the mouse isn't  clicking the last position of the mouse is drawed as white but not setted the cell as alive
     else {
-        int j = m_x/cells.size();  int i = m_y/cells.size();
-        glVertex2f(cells.size()/2 + cells.size() * j , cells.size()/2 + cells.size() * i);
+        int i = m_x/cells.size();  int j = m_y/cells.size();
+        glVertex2f(cells.size()/2 + cells.size() * i , cells.size()/2 + cells.size() * j);
     }
     // finally we end the "drawing time"
     glEnd();
@@ -161,7 +161,6 @@ void selector( unsigned char key, int xmouse, int ymouse)
         break;
 
     case '0':
-        cells.~board_t();
         std::exit(0);
         break;
 
