@@ -25,13 +25,14 @@ class cell_t
         bool next_;
         
         int i_, j_;
+        int n_, m_;
 
         int alive_neighbours_;
 
-        int n_, m_;
+        
 
     public:
-        cell_t(void):
+        cell_t():
         alive_(false), 
         next_(false){};
         ~cell_t(void){};
@@ -55,9 +56,9 @@ class cell_t
         friend std::ostream& operator<< (std::ostream& os, cell_t& cell);
 
     private:
-        //int left (int pos);
-        //int righ (int pos);
-        //int up (int pos);
-        //int down (int pos);
+        int left(int pos, int n);
+        int right(int pos, int n);
+        int up(int pos, int m);
+        int down(int pos, int m);
 };
 #endif

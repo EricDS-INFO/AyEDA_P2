@@ -26,15 +26,8 @@ int w =  X*size_;              // Width of the window (cell size and number by X
 int h =  Y*size_;              // Heigt of the window (cell size and number by Y axis cells)
 
 
-// this struct defines the cell, which is 
-struct P
-{
-    bool life;
-    int next;
-} p [X][Y]; // | <- The matrix is created in the instance of the Struct with X and Y values that provides the dimensions 
-
-
-cell_t Cells [X][Y];
+board_t cells(X, Y, size_);
+//cell_t Cells [X][Y];
 
 // This function displays each of the alive cells
 void display()
@@ -54,22 +47,26 @@ void display()
                 /// DEFAULT CELL PAINTING ///
 
     // We ride all the matrix in order to search the alive cells and draw them in the window
-    for (int y = 0; y < Y; ++y)
-        for (int x = 0; x < X; ++x)
-            if (Cells[x][y].get_state()) 
+    for (int i = 0; i < cells.get_n(); ++i)
+        for (int j = 0; j < cells.get_m(); ++j)
+            if (cells.at(i,j).get_state()) 
                 // The next function paints the alive cell in the position of the window as it is in the matrix of cells 
                 //            x dimension , y dimension
-                glVertex2f(size_/2 + x*size_, size_/2 + y*size_); 
+                glVertex2f(cells.size()/2 + i*size_, cells.size()/2 + j*size_); 
 
                 /// MOUSE CELL PAINTING ///
 
     // This conditional check the mouse movement for the user giving life to cells
-    if (m_down && m_x > 0 && m_y > 0 &&  m_x < X * size_ && m_y < Y*size_) 
-        Cells[m_x/size_][m_y/size_].set_state(true); 
+    if (m_down && m_x > 0 && m_y > 0 &&  
+        m_x < cells.get_m() * cells.size() && 
+        m_y < cells.get_n() * cells.size() )
+
+       cells.at( m_x/cells.size(), m_y/cells.size()).set_state(true);
+        
     // if the mouse isn't  clicking the last position of the mouse is drawed as white but not setted the cell as alive
     else {
-        int x = m_x/size_;  int y = m_y/size_;
-        glVertex2f(size_/2 + size_ * x ,size_/2 + size_ * y);
+        int j = m_x/cells.size();  int i = m_y/cells.size();
+        glVertex2f(cells.size()/2 + cells.size() * j , cells.size()/2 + cells.size() * i);
     }
     // finally we end the "drawing time"
     glEnd();
@@ -77,7 +74,6 @@ void display()
     //We must flush the buffer so, these two functions can achieve that
     //glutSwapBuffers(); 
     glFlush();
-
 }
 
 
@@ -126,40 +122,14 @@ int down (int pos)
 void update()
 {
       // We watch the entire matrix of cells (each cell) for checking the status
-      for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
+      for (int i = 0; i < cells.get_n(); ++i) for (int j = 0; j < cells.get_m(); ++j)
       {
-            int neighbors = 0;
-
-            // Counter increases if a cell was found in each position
-
-            // this group represents the basic axis of neighbor cells
-            
-            if (Cells[left(x)][y].get_state())          neighbors++;  //  left   
-            if (Cells[right(x)][y].get_state())         neighbors++;  //  right
-            if (Cells[x][up(y)].get_state())            neighbors++;  //  up
-            if (Cells[x][down(y)].get_state())          neighbors++;  //  down
-
-            // this group represents the diagonal of neighbor cells
-            if (Cells[left(x)][up(y)].get_state())      neighbors++;  // left  +  up
-            if (Cells[right(x)][up(y)].get_state())     neighbors++;  // right + up
-            if (Cells[left(x)][down(y)].get_state())    neighbors++;  // left + down
-            if (Cells[right(x)][down(y)].get_state())   neighbors++;  // right + down
-
-            // if cell is alive
-            if ( Cells[x][y].get_state()) 
-              if (neighbors != 2 && neighbors != 3) Cells[x][y].set_next(false); // Only if the neighbor numbers is 2 or 3 the cell stills alive
-              else Cells[x][y].set_next(true);
-
-            // if cell is dead
-            if (!Cells[x][y].get_state()) 
-              if (neighbors == 3) Cells[x][y].set_next(true); // if there are 3 neighbors alive a cell is born
-              else Cells[x][y].set_next(false);
+            cells.at(i, j).count_neighbours(cells);
       }
-        // The next loop just updates the life stage as the next was setted up
-        for (int y = 0; y < Y; ++y) for (int x = 0; x < X; ++x)
-            Cells[x][y].set_state( Cells[x][y].get_next() );
-
-
+      for (int i = 0; i < cells.get_n(); ++i) for (int j = 0; j < cells.get_m(); ++j)
+      {
+            cells.at(i, j).updateState();
+      }
 }
 
 
@@ -181,28 +151,30 @@ void selector( unsigned char key, int xmouse, int ymouse)
     // CLEAR STAGE 
     case '3':   
         // this check all the matrix killing all the cells
-        for (int y = 0; y < Y; ++y) { 
-            for (int x = 0; x < X; ++x) {
-                Cells[x][y].set_next(false);
-                Cells[x][y].set_state(false); 
-            }
+        for (int i = 0; i < cells.get_n(); ++i) for (int j = 0; j < cells.get_m(); ++j) 
+        {
+                cells.at(i, j).set_next(false);
+                cells.at(i, j).set_state(false); 
         }
+        
+        play = 0;
         break;
 
     case '0':
+        cells.~board_t();
         std::exit(0);
         break;
 
     // INCREASE SPEED
     case 'u':
         if (speed > 0)
-        speed = speed - 50;
+            speed = speed - 50;
         break;
 
     // DECREASE SPEED
     case 'd':
         if (speed <= 1000);
-        speed = speed + 50;
+            speed = speed + 50;
         break;
     break;
     default:
@@ -217,10 +189,10 @@ void timer(int = 0)
     
     // Only if the play variable is 1 the program proceed to update (you can change it by keyboard, selector function contains it)
     if (play) 
-        update (); 
+        update(); 
 
     // this shows the actual state in the window
-    display();
+        display();
 
     // Registers a timer callback executed in a specified milliseconds number (this provides changes throug running time)
     //            msecs,  callback, value
@@ -259,15 +231,9 @@ void motionpass (int ax, int ay)
 
 int main(int argc, char **argv)
 {
-    /* the next nested loops create the initial state of the layout */
-    for (int x = 0; x < X; x++)
-        for (int y = 0; y < Y; y++) {
-            Cells[x][y].set_state(false);  //rand()% 2;
-            Cells[x][y].set_next(false);
-        }
-
+    
       /*This statement prepare the library to run*/
-      glutInit(&argc, argv);
+     glutInit(&argc, argv);
 
         /*These two statements can define the display mode: 
         *

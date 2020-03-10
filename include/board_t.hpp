@@ -19,25 +19,32 @@
 #include <iostream>
 
 
+
 class cell_t;
 class board_t
 {
 private:
-    int n_dim_;
-    int m_dim_;
+    std::pair<int,int> dimensions_;
+    int cell_size_;
     cell_t** cell_grid_;
 public:
-      board_t(int n, int m);
-      ~board_t();
+
+    board_t(int n, int m);
+    board_t(int n, int m, int cell_size);
+    ~board_t();
       
-      inline  int get_n() const { return n_dim_ ; }
+    inline  int get_n() const { return dimensions_.first ; }
+    inline  int get_m() const { return dimensions_.second ; }
+    inline  int  size() const { return cell_size_; } 
+    
 
-      inline  int get_m() const { return m_dim_ ; }
+    cell_t& at(int i, int j) const;
+    cell_t& at(int i,  int j);
 
-      cell_t& at(const int i, const int j) const;
-      cell_t& at(const int i, const int j);
+    //cell_t& const operator[](int i ) const;
 
-      std::ostream& write(std::ostream& os);
+    cell_t& operator[](std::pair<int,int>& index);
+    std::ostream& write(std::ostream& os);
 
 };
 #endif
