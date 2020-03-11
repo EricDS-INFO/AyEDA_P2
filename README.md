@@ -9,7 +9,7 @@
 - [implementación de la clase célula](./src/cell_t.cpp)
 - [implementación de la clase tablero](./src/board_t.cpp)
 - [fichero de programa principal](./src/game_of_life_NG.cpp)
- > (tenga en cuenta que NG es de "Non Grpahic. Existe una versión gráfica del programa")
+ > (tenga en cuenta que NG es de "Non Graphic. Existe una versión gráfica del programa")
 
 
 ## Dependencias
