@@ -104,6 +104,7 @@ int cell_t::updateState(void)
 
 int cell_t::count_neighbours(const board_t& board)
 {
+    // qué posición de célula en el tablero tiene el número máximo de vecinos.
     int neighbours = 0;
     // Check the basic axis
     /* LEFT */

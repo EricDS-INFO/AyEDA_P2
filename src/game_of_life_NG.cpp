@@ -115,13 +115,27 @@ void run_generations(int it, int n, int m, board_t& cells)
     
     for (int i = 0; i < it; i++) 
     {
+        int max_alive_neighbours = 0;
+        int max_i= 0, max_j = 0;
+    
         for (int i = 1 ; i < n + 1; i++)
         {
             for (int j = 1 ; j < m + 1; j++)
             {
+                
                 cells.at(i,j).count_neighbours(cells);
+                if (max_alive_neighbours <= cells.at(i,j).count_neighbours(cells)){
+
+                    max_alive_neighbours = cells.at(i,j).count_neighbours(cells);
+                    max_i = i;
+                    max_j = j;
+                }
             }
         }
+        std::cout<<"la célula con más vecinos vivos este turno es: " 
+        << "[" << max_i << "][" << max_j << "] está "<< (cells.at(max_i, max_j).get_state() ? "viva" : "muerta")
+        << " y cuenta con " << max_alive_neighbours << " vecinos vivos"
+        << std::endl;
     
         for (int i = 1 ; i < n + 1; i++)
         {
@@ -201,7 +215,7 @@ int select_1by1(int n, int m, board_t& cells)
                 cells.at(i, j).set_state(op);
         }
     }
-    return 1;
+    return 0;
 } 
 
 
