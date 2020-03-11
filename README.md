@@ -33,8 +33,14 @@ Para adquirirla:
 
 - make clean -> eliminar ejecutables
 
+## Modificación del aula
+ Consta de calcular la célula con máximos vecinos vivos cada turno.
 
-## Respecto a ideas futuras:
+ Se encuentra en la carpeta modif.
+
+ Aún no tiene una regla make por cuestiones de tiempo.
+
+## Respecto a ideas futuras
  - otorgar a las células varios puntos de vida
   > esto podría emplearse con OpenGL para otorgar un color 
   > distinto a cada estado y asi generar un mapa de calor.
